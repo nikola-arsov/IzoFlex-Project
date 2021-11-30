@@ -1,0 +1,13 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="nav">
+    <ul id="menu" class="nav nav-tabs nav-fill bg-dark">
+        <li class="nav-item">
+            <a id="all" class="nav-link text-white active-category" th:href="@{/offers}">Всички</a>
+        </li>
+        <li th:each="c:${T(bg.softuni.model.enumeration.Category).values()}" class="nav-item">
+            <a th:id="${#strings.toLowerCase(c.name())}" class="nav-link text-white"
+               th:text="${#strings.capitalize(c.name().toLowerCase())}"
+               th:href="@{/offers/categories/{category}(category=${c.name().toLowerCase()})}"
+            ></a>
+        </li>
+    </ul>
+</div>

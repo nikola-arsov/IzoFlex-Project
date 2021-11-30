@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Банкови преводи')"></th:block>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container">
+    <h2 th:text="${url=='deposit'}?'Депозирай':'Прехвърли'" class="text-center text-white"></h2>
+    <form id="form" th:object="${amountModel}" th:action="@{/users/{path}(path=${url})}" th:method="POST"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <img style="object-fit: cover;height: 230px;" src="/img/money.jpg"
+             class="img-fluid"
+             alt="money image">
+        <div class="form-group">
+            <label for="amount" class="text-white font-weight-bold">Сума</label>
+            <input th:field="*{amount}" th:errorclass="border-danger" id="amount" name="amount" min="0.01" step="0.01"
+                   max="5000000" type="number"
+                   class="form-control"
+                   placeholder="Amount"/>
+        </div>
+        <p id="error" th:if="${error}" th:text="${error}" class="errors alert alert-danger"></p>
+        <p th:if="${#fields.hasErrors('amount')}"
+           th:text="${#fields.errors('amount').get(0).startsWith('Failed to convert property value of type java.lang.String to required type java.math.BigDecimal')}?'Моля въведете число.':${#fields.errors('amount').get(0)}"
+           class="errors alert alert-danger">
+        </p>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input id="submit" type="submit" class="btn btn-info btn-lg" th:value="${url=='deposit'}?'Депозирай':'Прехвърли'"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

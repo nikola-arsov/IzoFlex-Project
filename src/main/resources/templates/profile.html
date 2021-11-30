@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/head::head('IzoFlex: Профил')"></head>
+
+<body>
+<main>
+    <div th:replace="fragments/menu::menu"></div>
+    <div class="container">
+        <div th:object="${user}" class="card ml-5 mr-5 mt-4 mb-5 bg-dark text-white" style="max-width: 100%">
+            <div class="row no-gutters">
+                <div class="col-md-4 text-center">
+                    <img style="object-fit:cover;min-height: 480px" th:src="*{profilePicture}" class="card-img"
+                         alt="profile pic">
+                </div>
+                <div class="col-md-8 ">
+                    <div class="card-body" style="max-height: available">
+                        <h5 id="title" class="card-title">Информация за потребителя</h5>
+                        <ul id="data" class="list-group list-group-flush d-block">
+                            <li th:text="'Потребителско име: '+*{username}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                            <li th:text="'Електронна поща: '+*{email}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                            <li th:text="'Собствено име: '+*{firstName}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                            <li th:text="'Фамилно име: '+*{lastName}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                            <li th:text="'Пол: '+${#strings.capitalize(user.gender.toLowerCase())}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                            <li th:text="'Последна промяна: '+*{modifiedOn}"
+                                class="list-group-item position-static bg-dark text-white"></li>
+                        </ul>
+                        <a id="edit" class="text-white btn btn-primary btn-lg" style="text-decoration: none"
+                           th:href="@{/users/profile/edit}">Направи редакция на профила</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p class="m-5"></p>
+    <footer th:replace="fragments/footer::footer"></footer>
+</main>
+</body>
+</html>
