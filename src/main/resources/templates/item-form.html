@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="fragments/head::head(${url=='add'}?'IzoFlex: Добави оферта':'IzoFlex: Редактирай оферта')"></th:block>
+    <script src="/js/fileWizard.js" defer></script>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container">
+    <h2 th:text="${url=='add'}?'Добави оферта':'Редактирай оферта'" class="text-center text-white"></h2>
+    <form id="form" th:object="${item}" th:action="@{/items/{path}(path=${url})}" th:method="POST"
+          enctype="multipart/form-data"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <p id="fileError" class="justify-content-center alert alert-danger d-none">Моля избирайте снимки под 1MB.</p>
+        <p th:if="${error}" th:text="${error}" class="d-flex justify-content-center alert alert-danger"></p>
+        <div class="form-group">
+            <label for="name" class="text-white font-weight-bold">Име</label>
+            <input th:value="*{name}" name="name" th:errorclass="border-danger" id="name" type="text" minlength="2"
+                   maxlength="30"
+                   class="form-control"
+                   placeholder="Име на продукта"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="category">Категория</label>
+            <select th:field="*{category}" th:errorclass="border-danger" id="category" class="form-control">
+                <option value="">Изберете опция</option>
+                <option th:each="c:${T(bg.softuni.model.enumeration.Category).values()}" th:value="${c.name()}"
+                        th:text="${#strings.capitalize(c.name().toLowerCase())}"></option>
+            </select>
+            <p th:if="${#fields.hasErrors('category')}" th:errors="*{category}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="description">Описание</label>
+            <textarea th:text="*{description}" name="description" th:errorclass="border-danger" id="description"
+                      type="textarea" class="form-control" rows="4"
+                      placeholder="Описание"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" th:text="${url=='add'}?'Изберете снимка':'Изберете снимка - произволно'" for="images"></label>
+            <input th:field="*{images}" th:errorclass="text-danger" th:classappend="${error} ? 'text-danger':''"
+                   type="file" class="form-control-file text-white" id="images" accept="image/*" multiple>
+            <p th:if="${#fields.hasErrors('images')}" th:errors="*{images}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" id="submit" class="btn btn-info btn-lg" th:value="${url=='add'}?'Добави оферта':'Редактирай оферта'"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

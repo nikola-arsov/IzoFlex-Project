@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Информация оферта')"></th:block>
+    <script src="/js/formToggle.js" defer></script>
+    <script src="/js/monitorPrice.js" defer></script>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container ">
+    <h3 id="label" class="text-center text-white mb-3">Информация за офертата</h3>
+    <p id="price-error" style="display: none" class="alert alert-danger text-center m-1">Цената трябва да бъде поне 0.10 лева!</p>
+
+    <div th:object="${item}" class="card ml-5 mr-5 mt-2 " style="max-width: 100%;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img style="object-fit:cover;height: 500px;" class="card-img"
+                     th:src="*{photo}"
+                     alt="image">
+            </div>
+            <div class="col-md-8 ">
+                <div class="card-body" style="max-height: available">
+                    <h5 th:text="|Име: *{name}|" class="card-title"></h5>
+                    <ul class="list-group list-group-flush d-block">
+                        <li th:text="|Категория: ${#strings.capitalize(item.category.toLowerCase())}|"
+                            class="list-group-item position-static"></li>
+                        <li th:text="|Собственик: *{ownerFirstName} *{ownerLastName}|"
+                            class="list-group-item position-static"></li>
+                    </ul>
+                    <textarea id="description" th:text="*{description}" disabled
+                              class="overflow-auto w-100 my-textarea"></textarea>
+                    <form id="form" th:action="@{/offers/add}" method="POST" class="form-inline mt-5 mb-5 d-none">
+                        <div class="form-group mx-sm-2 ">
+                            <label for="price" class="sr-only">Price</label>
+                            <input type="number" style="min-width:100%;" class="form-control"
+                                   min="1" name="price"
+                                   id="price"
+                                   placeholder="Добави цена">
+                            <label for="itemId" class="sr-only">Item Id</label>
+                            <input name="itemId" id="itemId" th:value="*{id}" type="hidden">
+                        </div>
+                        <button id="submit" type="submit" class="btn btn-primary ">Добави оферта</button>
+                    </form>
+                    <div class="mb-3"></div>
+                    <div class=" justify-content-center">
+                        <th:block th:unless="*{forSale}">
+                            <form th:action="@{/items/remove/{path}(path=*{id})}" class="m-1 d-inline" th:method="POST"
+                                  onsubmit="document.getElementById('button').disabled=true;setTimeout(()=>{document.getElementById('button').disabled=false;},3000)">
+                                <input id="button" type="submit" class="text-white btn btn-danger btn-lg "
+                                       value="Премахни офертата">
+                            </form>
+                            <a class="text-white btn btn-warning btn-lg m-1" style="text-decoration: none"
+                               th:href="@{/items/edit/{path}(path=*{id})}">Редактирай офертата</a>
+                            <a id="sell" class="text-white btn btn-primary btn-lg m-1" style="text-decoration: none"
+                               href="#">Сложете цена на офертата</a>
+                        </th:block>
+                        <a th:if="*{forSale}" class="text-white btn btn-primary btn-lg" style="text-decoration: none"
+                           th:href="@{/offers/my}">Към моите оферти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>
