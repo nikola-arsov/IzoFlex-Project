@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec='http://www.thymeleaf.org/extras/spring-security'>
+
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Коментари')"></th:block>
+    <script src="/js/commentLoader.js" defer></script>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container">
+    <div th:object="${offer}" class="card text-center text-white bg-dark">
+
+        <input id="itemId" type="hidden" th:value="*{id}" class="m-0 p-0">
+
+        <div class="card-header bg-secondary d-inline-flex w-100 justify-content-center align-items-center">
+            <div class="mr-3" th:text="|Име на продукта: ${offer.itemName}|"></div>
+            <a class="btn btn-primary btn-lg ml-3 p-2" th:href="@{/offers/details/{id}(id=${offer.id})}">Обратно към
+                офертата</a>
+        </div>
+        <div class="card-body">
+            <ul id="comment-section" style="max-width: 1200px;max-height: 350px;overflow: auto">
+                <li class="d-flex text-left m-1" th:each="c:${comments}"
+                    th:text="|Публикувано на: ${c.time} Потребител: ${c.authorUsername} - ${c.content}|">
+                </li>
+            </ul>
+        </div>
+        <div class="card-footer bg-secondary">
+            <form id="form" th:object="${formModel}" sec:authorize="${hasAnyRole('USER','ADMIN')}"
+                  th:action="@{/comments/offers/{id}/add(id=${offer.id})}"
+                  th:method="POST">
+                <div class="d-inline-flex w-100 justify-content-center align-items-center mx-auto">
+                    <label class=" mb-0 w-25 p-2" for="content">Коментар:</label><input type="text"
+                                                                                            class="mr-2 w-100 p-2"
+                                                                                            th:field="*{content}"
+                                                                                            placeholder="Добавете Вашия коментар тук"
+                                                                                            name="content" min="1"
+                                                                                            max="150" id="content">
+                    <button id="submit" type="submit" class="w-50 btn btn-primary mr-2 p-2">Публикувай коментара</button>
+                </div>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
+                   class="errors alert alert-danger m-2">
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

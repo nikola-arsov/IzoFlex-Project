@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/head::head('IzoFlex: Нотификации')"></head>
+
+<body>
+<div th:replace="fragments/menu::menu"></div>
+<div class="container">
+    <h2 class="text-center text-white m-2">Всички нотификации</h2>
+    <div th:if="${hasUnseen}" class=" col-md-10 mx-auto d-flex  justify-content-center mb-3">
+        <a th:href="@{/notifications/mark}" class="btn btn-primary btn-lg">Mark as Seen</a>
+    </div>
+    <ul class="list-group col-md-10 d-flex mx-auto bg-dark p-0">
+<!--        style="min-height: 450px-->
+        <li th:each="n:${notifications}" class="list-group-item bg-dark border-0 m-0 p-2">
+            <p th:eac class="alert m-0"
+               th:classappend="${n.seen}?'alert-info':'alert-warning'"
+               th:text="'< '+${n.time}+' >Message: '+${n.text}">
+            </p>
+        </li>
+    </ul>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>
