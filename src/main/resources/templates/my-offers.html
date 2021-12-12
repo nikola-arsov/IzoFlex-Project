@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/head::head('IzoFlex: Моите оферти')"></head>
+
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container">
+    <h2 class="text-center text-white m-3">Моите оферти</h2>
+    <div class='row mb-4 d-flex justify-content-center'>
+        <div style="min-width: 600px" class="brand-section col-md-8 mx-auto d-flex flex-column ">
+            <div class="p-3">
+                <table class="p-3 mx-auto border-dark  w-100">
+                    <tr>
+                        <th>№</th>
+                        <th>Снимка</th>
+                        <th>Име</th>
+                        <th>Категория</th>
+                        <th>Цена</th>
+                        <th>Продавач</th>
+                        <th>Линк към офертата</th>
+                    </tr>
+                    <tr th:each="o,num:${offers}" >
+                           <th th:text="${num.index+1}"></th>
+                           <th><img th:src="${o.imageLocation}" class="img-thumbnail rounded" style="object-fit: cover;height: 70px;width: 100px" alt="car"></th>
+                           <th th:text="${o.itemName}"></th>
+                           <th th:text="${#strings.capitalize(o.itemCategory.toLowerCase())}"></th>
+                           <th th:text="${o.price}+' лв.'"></th>
+                           <th th:text="${o.sellerUsername}"></th>
+                        <th > <a th:href="@{/offers/details/{id}(id=${o.id})}">Към офертата</a></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

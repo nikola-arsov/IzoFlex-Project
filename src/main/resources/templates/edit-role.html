@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Промяна права')"></th:block>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+<body>
+<div th:replace="fragments/menu::menu"></div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
+            <div class="bg-light p-4 mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="tm-block-title d-inline-block m-0">Промяна права</h2>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-xl-7 col-lg-7 col-md-12">
+                        <form id="form" th:object="${model}" th:action="@{/users/roles/edit}" th:method="POST"
+                              class="tm-edit-product-form">
+                            <p th:if="${error}" th:text="${error}" class="alert alert-danger"></p>
+                            <div class="input-group mb-3">
+                                <label for="username"
+                                       class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Choose User:</label>
+                                <select th:field="*{username}" th:errorclass="border-danger"
+                                        class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" id="username"
+                                        name="username">
+                                    <option value="">Select user</option>
+                                    <option th:each="u:${@userServiceImpl.getAllUsernames()}" th:value="${u}"
+                                            th:text="${u}"></option>
+                                </select>
+                            </div>
+                            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                               class="errors alert alert-danger m-2 w-100">
+                            </p>
+                            <div class="input-group mb-3">
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" for="roles">Choose
+                                    Roles:</label>
+                                <select th:field="*{roles}" th:errorclass="border-danger" id="roles"
+                                        class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7"
+                                        style="max-height: 70px" name="roles" multiple>
+                                    <option th:each="r:${@roleServiceImpl.getAllRoles()}" th:value="${r}"
+                                            th:text="${#strings.substring(r,5)}"></option>
+                                </select>
+                            </div>
+                            <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"
+                               class="errors alert alert-danger m-2 w-100">
+                            </p>
+                            <div class="input-group mb-3">
+                                <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
+                                    <button id="submit" type="submit" class="btn btn-primary">Edit Roles</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 mx-auto mb-5">
+                        <img src="/img/maintenance.png" alt="tools picture" class="mb-3" width="100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

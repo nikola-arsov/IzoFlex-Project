@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Редакция профил')"></th:block>
+    <script src="/js/fileWizard.js" defer></script>
+    <script src="/js/lockSubmitButton.js" defer></script>
+</head>
+<body>
+<div th:replace="fragments/menu::menu"></div>
+
+<div class="container">
+    <h2 class="text-center text-white">Редакция на профила</h2>
+    <form th:object="${editModel}" id="form" th:action="@{/users/profile/edit}" th:method="POST"
+          enctype="multipart/form-data"
+          class="mx-auto d-flex col-md-8 flex-column bg-dark justify-content-start m-2 p-3">
+
+        <p id="fileError" class="alert alert-danger d-none">Please submit a photo under 1MB and in .jpg / .png
+            format.</p>
+        <p th:if="${error}" th:text="${error}" class="alert alert-danger"></p>
+
+        <div class="form-group">
+            <label for="firstName" class="text-white font-weight-bold">Собствено име</label>
+            <input th:field="*{firstName}" name="firstName"
+                   th:errorclass="border-danger"
+                   id="firstName" type="text" minlength="2"
+                   maxlength="20"
+                   class="form-control"
+                   placeholder="First Name"/>
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="lastName" class="text-white font-weight-bold">Фамилно име</label>
+            <input th:field="*{lastName}" name="lastName"
+                   th:errorclass="border-danger"
+                   id="lastName" type="text" minlength="2"
+                   maxlength="20"
+                   class="form-control"
+                   placeholder="last Name"/>
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+               class="errors alert alert-danger">
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="images">Изберете снимка - по избор</label>
+            <input th:field="*{images}"
+                   th:classappend="${error}?'text-danger':''"
+                   name="images"
+                   type="file" class="form-control-file text-white" id="images"
+                   accept="image/*">
+        </div>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input id="submit" type="submit" class="btn btn-primary btn-lg" value="Направи промяната"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>

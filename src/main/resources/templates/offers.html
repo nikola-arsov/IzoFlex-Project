@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:include="fragments/head::head('IzoFlex: Продукти')"></th:block>
+        <script src="/js/offersPaginationAndLoading.js" defer></script>
+        <script src="/js/paginationBlackMagic.js" defer></script>
+</head>
+
+<body>
+<div th:replace="fragments/menu::menu"></div>
+<div id="main" class="container-fluid">
+    <div th:replace="fragments/nav::nav"></div>
+    <a id="magic" class="d-none p-0 m-0" th:if="${magicLink}" th:href="@{{url}(url=${magicLink},page=${magicPage})}"></a>
+    <nav class="nav mt-2 justify-content-center" aria-label="Page navigation example">
+        <ul class="pagination">
+            <li  id="prev-li" class="page-item" th:classappend="${current}-1<0?'disabled':''"><a id="prev-a"
+                    class="page-link pl-5 pr-5  bg-secondary text-white font-weight-normal"
+                    th:classappend="${current}-1<0?'bg-dark':''"
+                    th:href="@{/offers(page=${current}-1)}">Prev</a></li>
+            <li><span id="current" class="page-link disabled pl-4 pr-4  bg-dark text-white font-weight-normal"
+                      th:text="${current}"></span></li>
+            <li id="next-li" class="page-item" th:classappend="${current>=max_index}?'disabled':''"><a id="next-a"
+                    class="page-link pl-5 pr-5  bg-secondary  text-white font-weight-normal"
+                    th:classappend="${current>=max_index}?'bg-dark':''"
+                    th:href="@{/offers(page=${current}+1)}"
+            >Next</a></li>
+        </ul>
+    </nav>
+    <p class="m-4"></p>
+    <div id="tab" class="offers row mx-auto col-10 d-flex flex-row justify-content-center">
+        <div th:each="o:${offers}" class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0" style="max-width: 260px">
+            <div class="card-img-top-wrapper" >
+                <img class="card-img-top h-100" style="object-fit: cover;" th:src="${o.imageLocation}"
+                     alt="Car image">
+            </div>
+            <div class="card-body p-2">
+                <h5 class="card-title mb-0 text-center" th:text="${o.itemName}"></h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush d-block">
+                <li class="list-group-item position-static">
+                    <div class="card-text"
+                         th:text="|Категория: ${#strings.capitalize(#strings.toLowerCase(o.itemCategory))}|"></div>
+                    <div class="card-text"><span th:text="'Продавач: ' + ${o.sellerUsername}"></span></div>
+                    <div class="card-text"><span th:text="'Цена: ' + ${o.price} + ' лв.'"></span></div>
+                </li>
+            </ul>
+            <div class="card-body p-2">
+                <a class="card-link" th:href="@{/offers/details/{id}(id=${o.id})}">Детайли на офертата</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
+</html>
