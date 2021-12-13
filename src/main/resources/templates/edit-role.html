@@ -22,11 +22,11 @@
                             <p th:if="${error}" th:text="${error}" class="alert alert-danger"></p>
                             <div class="input-group mb-3">
                                 <label for="username"
-                                       class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Choose User:</label>
+                                       class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">Изберете потребител:</label>
                                 <select th:field="*{username}" th:errorclass="border-danger"
                                         class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7" id="username"
                                         name="username">
-                                    <option value="">Select user</option>
+                                    <option value="">Изберете потребител</option>
                                     <option th:each="u:${@userServiceImpl.getAllUsernames()}" th:value="${u}"
                                             th:text="${u}"></option>
                                 </select>
@@ -35,8 +35,7 @@
                                class="errors alert alert-danger m-2 w-100">
                             </p>
                             <div class="input-group mb-3">
-                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" for="roles">Choose
-                                    Roles:</label>
+                                <label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label" for="roles">Изберете от ролите:</label>
                                 <select th:field="*{roles}" th:errorclass="border-danger" id="roles"
                                         class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7"
                                         style="max-height: 70px" name="roles" multiple>
@@ -49,7 +48,7 @@
                             </p>
                             <div class="input-group mb-3">
                                 <div class="ml-auto col-xl-8 col-lg-8 col-md-8 col-sm-7 pl-0">
-                                    <button id="submit" type="submit" class="btn btn-primary">Edit Roles</button>
+                                    <button id="submit" type="submit" class="btn btn-primary">Запази промените</button>
                                 </div>
                             </div>
                         </form>

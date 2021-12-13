@@ -38,13 +38,13 @@ function fetchData(url) {
                               </div>
                               <ul class="offer-details list-group list-group-flush d-block">
                               <li class="list-group-item position-static">
-                              <div class="card-text">Category: ${offer.itemCategory.charAt(0) + offer.itemCategory.slice(1).toLocaleLowerCase()}</div>
-                              <div class="card-text"><span>Seller: ${offer.sellerUsername}</span></div>
-                              <div class="card-tex t"><span>Price: ${Number(offer.price).toFixed(2)} €</span></div>
+                              <div class="card-text">Категория: ${offer.itemCategory.charAt(0) + offer.itemCategory.slice(1).toLocaleLowerCase()}</div>
+                              <div class="card-text"><span>Продавач: ${offer.sellerUsername}</span></div>
+                              <div class="card-tex t"><span>Цена: ${Number(offer.price).toFixed(2)} лв.</span></div>
                               </li>
                               </ul>
                               <div class="card-body p-2">
-                              <a class="card-link" href="/offers/details/${offer.id}">Details</a>
+                              <a class="card-link" href="/offers/details/${offer.id}">Детайли на офертата</a>
                               </div>
                               </div>`)
             }
