@@ -31,7 +31,7 @@ public class HomeController {
             model.addAttribute("fullName", this.userService.getFullName(principal.getName()));
             model.addAttribute("itemCount", this.userService.getCollectionCount(principal.getName()));
             model.addAttribute("offerCount", this.offerService.getActiveOffers());
-            model.addAttribute("balance", String.format("Вашият баланс по сметката е %s €.", this.userService.getBalance(principal.getName())));
+            model.addAttribute("balance", String.format("Вашият баланс по сметката е %s лв.", this.userService.getBalance(principal.getName())));
             model.addAttribute("notificationCount", this.notificationService.getUnreadNotificationsCount(this.userService.getIdByUsername(principal.getName())));
         }
         return "index";
