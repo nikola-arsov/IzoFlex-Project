@@ -195,7 +195,7 @@ public class UserController {
                 } else {
                     this.userService.withdraw(username, amountModel);
                 }
-                redirectAttributes.addFlashAttribute("success", String.format("Вие %s %s евро успешно!"
+                redirectAttributes.addFlashAttribute("success", String.format("Вие %s %s лева успешно!"
                         , ("deposit").equals(url) ? "депозирахте" : "прехвърлихте"
                         , amountModel.getAmount()));
 

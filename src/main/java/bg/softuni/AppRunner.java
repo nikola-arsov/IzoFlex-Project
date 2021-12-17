@@ -49,10 +49,10 @@ public class AppRunner implements CommandLineRunner {
 
         user.setUsername(type);
         user.setPassword(encoder.encode(type+type));
-        user.setEmail(type + "@example.com");
+        user.setEmail(type + "@abv.com");
         user.setBalance(BigDecimal.ZERO);
         user.setCreatedOn(LocalDateTime.now());
-        user.setGender(Gender.MALE);
+        user.setGender(Gender.МЪЖ);
         user.setProfilePicture("/img/male-avatar.svg");
         user.setFirstName(firstName);
         user.setLastName(lastName);

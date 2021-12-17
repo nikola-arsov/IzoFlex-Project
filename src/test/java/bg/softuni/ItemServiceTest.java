@@ -102,7 +102,7 @@ public class ItemServiceTest {
 
         assertEquals("ADMIN", captor.getValue().getOwner().getUsername());
         assertEquals("test", captor.getValue().getName());
-        Assertions.assertEquals(Category.ЛИСТОВА_ПОДЛОЖКА, captor.getValue().getCategory());
+        Assertions.assertEquals(Category.ЛИСТОВЕ, captor.getValue().getCategory());
         assertEquals("testtesttesttesttest", captor.getValue().getDescription());
         assertFalse(captor.getValue().isForSale());
         assertEquals(1, captor.getValue().getPhotos().size());
@@ -134,13 +134,13 @@ public class ItemServiceTest {
         ArgumentCaptor<Item> captor = ArgumentCaptor.forClass(Item.class);
         when(repository.findById(any())).thenReturn(Optional.of(this.item));
         when(repository.saveAndFlush(any())).thenReturn(new Item());
-        ItemFormModel item = new ItemFormModel(null, "edited", "ИЗОЛАЦИИОННА_ПОДЛОЖКА", "editededited", List.of(new MockMultipartFile("name", "", "image/jpg", new byte[1])));
+        ItemFormModel item = new ItemFormModel(null, "edited", "ИЗОЛАЦИЯ", "editededited", List.of(new MockMultipartFile("name", "", "image/jpg", new byte[1])));
 
         this.itemService.editItem("ADMIN", item);
         verify(repository).saveAndFlush(captor.capture());
 
         assertEquals("edited", captor.getValue().getName());
-        Assertions.assertEquals(Category.ИЗОЛАЦИИОННА_ПОДЛОЖКА, captor.getValue().getCategory());
+        Assertions.assertEquals(Category.ИЗОЛАЦИЯ, captor.getValue().getCategory());
         assertEquals("editededited", captor.getValue().getDescription());
         assertEquals("unchanged", ((Photo) captor.getValue().getPhotos().toArray()[0]).getLocation());
     }
@@ -151,13 +151,13 @@ public class ItemServiceTest {
         when(repository.findById(any())).thenReturn(Optional.of(this.item));
         when(repository.saveAndFlush(any())).thenReturn(new Item());
         when(fileHandler.saveFile(anyString(), any())).thenReturn("new");
-        ItemFormModel item = new ItemFormModel(null, "edited", "ИЗОЛАЦИИОННА_ПОДЛОЖКА", "editededited", List.of(new MockMultipartFile("testFile.jpg", "testFile.jpg", "image/jpg", Files.readAllBytes(Path.of("src/test/resources/testFile.jpg")))));
+        ItemFormModel item = new ItemFormModel(null, "edited", "ИЗОЛАЦИЯ", "editededited", List.of(new MockMultipartFile("testFile.jpg", "testFile.jpg", "image/jpg", Files.readAllBytes(Path.of("src/test/resources/testFile.jpg")))));
 
         this.itemService.editItem("ADMIN", item);
         verify(repository).saveAndFlush(captor.capture());
 
         assertEquals("edited", captor.getValue().getName());
-        Assertions.assertEquals(Category.ИЗОЛАЦИИОННА_ПОДЛОЖКА, captor.getValue().getCategory());
+        Assertions.assertEquals(Category.ИЗОЛАЦИЯ, captor.getValue().getCategory());
         assertEquals("editededited", captor.getValue().getDescription());
         assertEquals("new", ((Photo) captor.getValue().getPhotos().toArray()[0]).getLocation());
     }
@@ -255,13 +255,13 @@ public class ItemServiceTest {
     public void testValidateOwnerAndItemId() {
         this.item.setName("VALIDATE");
         this.item.setDescription("VALIDATE");
-        this.item.setCategory(Category.ИЗОЛАЦИИОННА_ПОДЛОЖКА);
+        this.item.setCategory(Category.ИЗОЛАЦИЯ);
         when(repository.findById(any())).thenReturn(Optional.of(this.item));
         Item out = itemService.validateOwnerAndItemId("SOME", "ADMIN", "MESSAGE");
 
         assertEquals("VALIDATE", out.getName());
         assertEquals("VALIDATE", out.getDescription());
-        Assertions.assertEquals(Category.ИЗОЛАЦИИОННА_ПОДЛОЖКА, out.getCategory());
+        Assertions.assertEquals(Category.ИЗОЛАЦИЯ, out.getCategory());
     }
 
     @Test
