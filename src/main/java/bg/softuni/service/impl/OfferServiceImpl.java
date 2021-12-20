@@ -58,7 +58,7 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public OfferServiceModel addOffer(String username, String itemId, BigDecimal price) {
-        if (price.compareTo(BigDecimal.ONE) < 0) throw new IllegalArgumentException("Price must be at least 1 euro!");
+        if (price.compareTo(BigDecimal.ONE) < 0) throw new IllegalArgumentException("Price must be at least 1 lv!");
         Item item = this.itemService.validateOwnerAndItemId(itemId, username, "sell it");
         this.itemService.toggleForSale(item);
         User seller = item.getOwner();

@@ -49,6 +49,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
     public CommentServiceModel addComment(Offer currentOffer, String authorUsername, AddCommentModel model) {
         User user = this.userService.getUserByUsername(authorUsername);
 
@@ -67,7 +68,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 12 15 * ?")
+    @Scheduled(cron = "0 0 12 15 * ?") //Execute at 12:15 PM (noon) every day
     public void removeAllCommentsOlderThanAMonth() {
         this.repository.findAll().forEach(e -> {
             long diff = Duration.between(e.getPostedOn(), LocalDateTime.now()).toDays();

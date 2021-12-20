@@ -11,5 +11,4 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
     List<Notification> getAllByUser_IdAndSeen(String id, boolean value);
     List<Notification> getAllByUser_UsernameOrderByTimeDesc(String username);
     long countAllByUser_UsernameAndSeen(String username,boolean seen);
-
 }

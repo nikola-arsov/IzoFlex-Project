@@ -76,7 +76,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0 0 * * ?") // Execute in every midnight
     public void removeOldNotifications() {
         this.repository.findAll().forEach(e -> {
             long diff = Duration.between(e.getTime(), LocalDateTime.now()).toHours();

@@ -17,9 +17,9 @@
                 <p th:text="|Здравейте ${fullName?:''}!|" class="m-3"></p>
                 <th:block sec:authorize="hasRole('USER')">
                     <p th:text="${balance}" class="m-3"></p>
-                    <p th:text="|Имате  точно ${offerCount}  ${offerCount==1 ?'оферта':'оферти'}.|"
+                    <p th:text="|В сайта има налични точно ${offerCount}  ${offerCount==1 ?'оферта':'оферти'}.|"
                        class="m-3"></p>
-                    <p th:text="|Имате ${itemCount} ${itemCount==1 ?'продукт':'продукти'} във вашата колекция|"
+                    <p th:text="|Имате ${itemCount} ${itemCount==1 ?'продукт':'продукти'} във вашата колекция.|"
                        class="m-3"></p>
                     <p th:text="|Имате ${notificationCount} ${notificationCount==1 ?'непрочетена':'непрочетени'} ${notificationCount==1 ?'нотификация':'нотификации'}.|"
                        class="m-3"></p>
