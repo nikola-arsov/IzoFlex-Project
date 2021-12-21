@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
         User user = this.validateUserAndModel(username, model, AMOUNT_ERROR);
 
         if (BigDecimal.ZERO.compareTo(user.getBalance().subtract(model.getAmount())) > 0) {
-            throw new IllegalStateException(String.format("Потребителя няма достатъчно пари, за да прехвърли %s euro - баланс: %s €"
+            throw new IllegalStateException(String.format("Потребителя няма достатъчно пари, за да прехвърли %s лв. - баланс: %s лв."
                     , model.getAmount(), user.getBalance()));
         }
         user.setBalance(user.getBalance().subtract(model.getAmount()));
